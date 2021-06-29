@@ -1,0 +1,3 @@
+[submodule "node-api-conversao/api-conversao"]
+	path = node-api-conversao/api-conversao
+	url = https://github.com/pedrorougemont/api-conversao
