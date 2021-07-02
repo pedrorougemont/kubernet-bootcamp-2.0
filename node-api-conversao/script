@@ -1,0 +1,7 @@
+
+docker image build -t pedrorougemont/node-api-conversao:v1 .
+docker push pedrorougemont/node-api-conversao:v1
+docker tag pedrorougemont/node-api-conversao:v1 pedrorougemont/node-api-conversao:latest
+docker push pedrorougemont/node-api-conversao:latest
+docker container run --publish 8080:8080 --name node-api-conversao pedrorougemont/node-api-conversao
+docker container ls -a

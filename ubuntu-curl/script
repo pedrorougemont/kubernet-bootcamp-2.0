@@ -1,0 +1,9 @@
+docker login
+docker image pull ubuntu
+docker image history ubuntu:latest
+docker image build -t pedrorougemont/ubuntu-curl:v1 .
+docker push pedrorougemont/ubuntu-curl:v1
+docker tag pedrorougemont/ubuntu-curl:v1 pedrorougemont/ubuntu-curl:latest
+docker push pedrorougemont/ubuntu-curl:latest
+docker image ls -a
+docker run -it pedrorougemont/ubuntu-curl:v1 /bin/bash

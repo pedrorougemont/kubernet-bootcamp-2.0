@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: meusegundopod
+  labels:
+    app: nginx
+spec:
+  containers:
+    - name: site
+      image: kubedevio/nginx-color:blue
+      ports:
+        - containerPort: 80
