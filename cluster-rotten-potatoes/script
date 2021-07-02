@@ -1,0 +1,9 @@
+k3d cluster create cluster-rotten-potatoes --agents 2 --servers 1 -p "8080:30000@loadbalancer"
+kubectl config use-context k3d-cluster-rotten-potatoes
+kubectl get nodes
+kubectl apply -f ./mongo-deployment.yaml
+kubectl get pods
+kubectl apply -f ./mongo-service.yaml
+kubectl apply -f ./web-deployment.yaml
+kubectl get all
+kubectl scale deployment movies --replicas 3

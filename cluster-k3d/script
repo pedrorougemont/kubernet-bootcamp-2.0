@@ -24,3 +24,14 @@ kubectl get pods
 kubectl delete pods meureplicaset-tkksj
 kubectl delete -f ./meureplicaset.yaml
 kubectl apply -f ./meudeployment.yaml
+kubectl get deployment
+kubectl describe deployment meudeployment
+kubectl get replicaset
+kubectl apply -f ./meuservice.yaml
+k3d cluster list
+k3d cluster delete meucluster
+k3d cluster create --agents 2 --servers 1 -p "8080:30000@loadbalancer"
+docker container list
+kubectl apply -f ./meudeployment.yaml
+kubectl apply -f ./meuservice.yaml
+kubectl get all

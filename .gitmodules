@@ -1,3 +1,6 @@
 [submodule "node-api-conversao/api-conversao"]
 	path = node-api-conversao/api-conversao
 	url = https://github.com/pedrorougemont/api-conversao
+[submodule "imagem-rotten-potatoes/rotten-potatoes"]
+	path = imagem-rotten-potatoes/rotten-potatoes
+	url = https://github.com/pedrorougemont/rotten-potatoes.git

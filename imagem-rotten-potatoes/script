@@ -1,0 +1,4 @@
+docker build -t pedrorougemont/rotten-potatoes:v1 .
+docker tag pedrorougemont/rotten-potatoes:v1 pedrorougemont/rotten-potatoes:latest
+docker push pedrorougemont/rotten-potatoes:v1
+docker push pedrorougemont/rotten-potatoes:latest
