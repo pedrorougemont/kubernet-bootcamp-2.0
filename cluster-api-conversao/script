@@ -1,0 +1,3 @@
+k3d cluster create cluster-api-conversao --agents 1 --servers 1 --no-lb
+kubectl apply -f .
+kubectl port-forward pod/api-conversao-6f9c4d67d7-vlpgs 80:8080
