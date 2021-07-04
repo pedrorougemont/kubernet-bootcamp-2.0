@@ -1,0 +1,59 @@
+docker run --rm -it amazon/aws-cli --version
+#alias aws='docker run --rm -it -v //c/Users/Aline\ Santos/.aws:/root/.aws -v //c/Users/Aline\ Santos/.kube:/root/.kube amazon/aws-cli'
+#Tive de instalar cli aws v2 no Windows mesmo, pois versao docker nao funciona bem com .kube
+aws cloudformation create-stack \
+  --region us-east-1 \
+  --stack-name eks-vpc \
+  --template-url https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2019-01-09/amazon-eks-vpc-sample.yaml
+aws iam create-role \
+  --role-name EKSClusterRole \
+  --assume-role-policy-document file://"C:/Users/Aline Santos/.aws/cluster-role-trust-policy.json"
+aws iam attach-role-policy \
+  --policy-arn arn:aws:iam::aws:policy/AmazonEKSClusterPolicy \
+  --role-name EKSClusterRole
+aws eks create-cluster \
+        --name cluster-aula \
+        --role-arn arn:aws:iam::374033624782:role/EKSClusterRole \
+        --resources-vpc-config subnetIds=subnet-09b806c9ac0fedb71,subnet-091a56d956b8b22c4,subnet-0f6c40d53417ca5cf,securityGroupIds=sg-02e0d362f928302e0
+aws eks update-kubeconfig \
+  --region us-east-1 \
+  --name cluster-aula
+aws sts get-caller-identity
+kubectl get svc
+aws iam create-role \
+  --role-name EKSCNIRole \
+  --assume-role-policy-document file://"C:/Users/Aline Santos/.aws/cni-role-trust-policy.json"
+aws iam attach-role-policy \
+  --policy-arn arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy \
+  --role-name EKSCNIRole
+aws eks list-addons --cluster-name cluster-aula
+aws eks create-addon \
+  --cluster-name cluster-aula \
+  --addon-name vpc-cni \
+  --service-account-role-arn arn:aws:iam::<accountId>:role/EKSCNIRole 
+aws iam create-role \
+  --role-name EKSNodeRole \
+  --assume-role-policy-document file://"C:/Users/Aline Santos/.aws/node-role-trust-policy.json"
+aws iam attach-role-policy \
+  --policy-arn arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy \
+  --role-name EKSNodeRole
+aws iam attach-role-policy \
+  --policy-arn arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly \
+  --role-name EKSNodeRole    
+kubectl get pods --all-namespaces -o wide
+
+# Cluster falta um monte de coisas, nós com t2.micro não criam direito
+# Apaguei e criei outro usando agora o eksctl.
+
+eksctl create cluster \
+        --name cluster-aula3 \
+        --region us-east-1 \
+        --with-oidc \
+        --ssh-access \
+        --ssh-public-key wordpress \
+        --managed
+aws eks update-kubeconfig \
+  --region us-east-1 \
+  --name cluster-aula3
+
+# Criou nós com m5.large 
