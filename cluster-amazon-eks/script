@@ -57,3 +57,7 @@ aws eks update-kubeconfig \
   --name cluster-aula3
 
 # Criou nós com m5.large 
+# Pegar Ips externos dos nodes do cluster:
+kubectl get nodes -o wide |  awk {'print $1" " $2 " " $7'} | column -t
+
+# Precisa abrir a porta 30000 no SecurityGroup na AWS
