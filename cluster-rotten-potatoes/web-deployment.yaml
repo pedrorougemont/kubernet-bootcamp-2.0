@@ -10,6 +10,10 @@ spec:
     metadata:
       labels:
         app: movies
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "metrics"
+        prometheus.io/port: "5000"
     spec:
       containers:
         - name: movies
@@ -37,7 +41,7 @@ spec:
   selector:
     app: movies
   ports:
-    - port: 8080
+    - port: 80
       targetPort: 5000
       nodePort: 30000
   type: NodePort

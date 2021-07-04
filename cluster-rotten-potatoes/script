@@ -7,3 +7,19 @@ kubectl apply -f ./mongo-service.yaml
 kubectl apply -f ./web-deployment.yaml
 kubectl get all
 kubectl scale deployment movies --replicas 3
+k3d cluster delete cluster-rotten-potatoes
+k3d cluster create cluster-rotten-potatoes --agents 2 --servers 1 -p "80:30000@loadbalancer" -p "81:30001@loadbalancer"
+# Busque sempre no artifact hub : https://artifacthub.io/
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add kube-state-metrics https://kubernetes.github.io/kube-state-metrics
+helm repo update
+helm show values prometheus-community/prometheus
+helm install prometheus prometheus-community/prometheus --values prometheus-values.yaml
+kubectl get svc --namespace default -w prometheus-server
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+helm show values grafana/grafana > grafana-values.yaml
+k3d cluster delete cluster-rotten-potatoes
+k3d cluster create cluster-rotten-potatoes --agents 2 --servers 1 -p "80:30000@loadbalancer" -p "81:30001@loadbalancer" -p "82:30002@loadbalancer"
+helm install grafana grafana/grafana --values grafana-values.yaml
+kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo

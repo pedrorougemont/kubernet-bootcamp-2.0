@@ -17,3 +17,4 @@ kubectl scale deployment api-conversao --replicas 10
 kubectl get pods
 kubectl scale deployment api-conversao --replicas 3
 kubectl top pods
+# adicione hscaler e rode http://localhost/stress/cpu/tempostress/60/intervalo/1/ciclos/2
