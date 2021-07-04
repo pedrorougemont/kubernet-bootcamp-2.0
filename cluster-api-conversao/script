@@ -1,3 +1,19 @@
 k3d cluster create cluster-api-conversao --agents 1 --servers 1 --no-lb
 kubectl apply -f .
 kubectl port-forward pod/api-conversao-6f9c4d67d7-vlpgs 80:8080
+#kubectl config use-context k3d-cluster-api-conversao
+curl -X PUT http://localhost/unhealth
+k3d cluster delete cluster-api-conversao
+k3d cluster create cluster-api-conversao --agents 1 --servers 1 -p "80:30000@loadbalancer"
+kubectl get all
+curl -X PUT http://localhost/unhealth
+kubectl describe pod/api-conversao-5c9596488d-g8724
+kubectl get endpoints
+kubectl scale deployment api-conversao --replicas 2
+#prepare readiness
+curl -X PUT http://localhost/unreadyfor/30
+kubectl get endpoints
+kubectl scale deployment api-conversao --replicas 10
+kubectl get pods
+kubectl scale deployment api-conversao --replicas 3
+kubectl top pods

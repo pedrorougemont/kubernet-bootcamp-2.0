@@ -60,4 +60,4 @@ aws eks update-kubeconfig \
 # Pegar Ips externos dos nodes do cluster:
 kubectl get nodes -o wide |  awk {'print $1" " $2 " " $7'} | column -t
 
-# Precisa abrir a porta 30000 no SecurityGroup na AWS
+# Precisa abrir a porta 30000 no SecurityGroup na aws
